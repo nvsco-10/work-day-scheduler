@@ -63,12 +63,20 @@ function convertHours(hour) {
 
 function saveBlockEntry() {
 
-    const rowId = $(this).attr("data-id")
-    const currentBlockInput = $(this).parent().siblings().find("textarea").val();
+    const id = $(this).attr("data-id")
+    const entry = $(this).parent().siblings().find("textarea").val();
+
+    // get entries from storage. if no entries, set value to empty array
+    const entries = JSON.parse(localStorage.getItem("blockEntries")) ?? [];
+
+    const newEntry = { id, entry }
+
+    entries.push(newEntry)
     
-    console.log(rowId)
+    localStorage.setItem("blockEntries", JSON.stringify(entries))
 }
 
+localStorage.clear();
 
 
 
