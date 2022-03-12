@@ -14,7 +14,7 @@ function loadTimeBlocks() {
 
     // 9 - 17 will create 9 blocks
     for(let i=startBlock; i<=17; i++) {
-        let hour = i;
+        let hour = i; // 24 hour format
 
         const hours = convertHours(hour);
         
@@ -33,8 +33,7 @@ function loadTimeBlocks() {
 
 function detectHour(hour) {
     let blockColor;
-    const currentHour = today.format("h");
-    console.log(currentHour)
+    const currentHour = today.format("H"); // 24 hour format
 
     if (hour > currentHour) {
         blockColor = "future";
@@ -47,9 +46,11 @@ function detectHour(hour) {
     return blockColor;
 }
 
+// convert hours from 24 hour to 12 hour format
 function convertHours(hour) {
     let convertedHours = hour % 12;
 
+    // 0 -> 12PM
     if (convertedHours === 0) {
         convertedHours += 12;
     }
