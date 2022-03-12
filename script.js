@@ -30,6 +30,8 @@ function loadTimeBlocks() {
         blocksContainer.append(blockRow);
     }
 
+    displayEntries();
+
     $("button").on("click", saveBlockEntry)
 
 }
@@ -76,7 +78,24 @@ function saveBlockEntry() {
     localStorage.setItem("blockEntries", JSON.stringify(entries))
 }
 
-localStorage.clear();
+function displayEntries() {
+    const entries = JSON.parse(localStorage.getItem("blockEntries"))
+    console.log(entries)
+
+    if (entries) {
+        entries.forEach(item => {
+            const entryId = item.id
+            const entry = item.entry
+    
+            const inputArea = $(`#${entryId}`)
+            
+            inputArea.text(entry)
+    })
+    
+    }
+}
+
+
 
 
 
