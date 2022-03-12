@@ -1,5 +1,6 @@
 const currentDayOutput = $("#currentDay");
 const blocksContainer = $(".container");
+
 const startBlock = 9 // 9AM - 5PM
 
 // current date
@@ -23,11 +24,13 @@ function loadTimeBlocks() {
         const blockRow = $(`<div class="row time-block">`);
 
         blockRow.append(`<div class='col-lg-2 hour'>${hours}</div>`)
-        blockRow.append(`<div class='col-lg-8 ${backgroundColor}'><textarea name='input-text' id='input-text'></textarea></div>`)
-        blockRow.append(`<div class="col-lg-2 "><button class="saveBtn"><i class="fa-solid fa-floppy-disk"></i></button></div>`)
+        blockRow.append(`<div class='col-lg-8 ${backgroundColor}'><textarea name='input-text' id='row${i}'></textarea></div>`)
+        blockRow.append(`<div class="col-lg-2 "><button data-id="row${i}" class="saveBtn"><i class="fa-solid fa-floppy-disk"></i></button></div>`)
 
         blocksContainer.append(blockRow);
     }
+
+    $("button").on("click", saveBlockEntry)
 
 }
 
@@ -57,6 +60,16 @@ function convertHours(hour) {
 
     return convertedHours;
 }
+
+function saveBlockEntry() {
+
+    const rowId = $(this).attr("data-id")
+    const currentBlockInput = $(this).parent().siblings().find("textarea").val();
+    
+    console.log(rowId)
+}
+
+
 
 
 
