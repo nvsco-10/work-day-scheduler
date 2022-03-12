@@ -15,12 +15,14 @@ function loadTimeBlocks() {
     // 9 - 17 will create 9 blocks
     for(let i=startBlock; i<=17; i++) {
         const hour = i;
+        console.log(hour)
         
+        const backgroundColor = detectHour(hour); 
 
         const blockRow = $(`<div class="row time-block">`);
 
         blockRow.append(`<div class='col-lg-2 hour'>${hour}</div>`)
-        blockRow.append(`<div class='col-lg-8'><textarea name='input-text' id='input-text'></textarea></div>`)
+        blockRow.append(`<div class='col-lg-8 ${backgroundColor}'><textarea name='input-text' id='input-text'></textarea></div>`)
         blockRow.append(`<div class="col-lg-2 "><button class="saveBtn"><i class="fa-solid fa-floppy-disk"></i></button></div>`)
 
         blocksContainer.append(blockRow);
@@ -28,11 +30,20 @@ function loadTimeBlocks() {
 
 }
 
-function detectHour() {
-    let color;
+function detectHour(hour) {
+    let blockColor;
     const currentHour = today.format("h");
-
     console.log(currentHour)
+
+    if (hour > currentHour) {
+        blockColor = "future";
+    } else if (hour < currentHour) {
+        blockColor = "past";
+    } else {
+        blockColor = "present"
+    }
+
+    return blockColor;
 }
 
 
