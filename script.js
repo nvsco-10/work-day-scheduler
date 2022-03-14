@@ -2,15 +2,14 @@ const currentDayOutput = $("#currentDay");
 const blocksContainer = $(".container");
 
 const startBlock = 9 // 9AM - 5PM
+const today = moment(); // current date
 
-// current date
-const today = moment();
-
-// display current date - format: Saturday, March 12th
 
 $(document).ready(loadTimeBlocks);
 
+
 function loadTimeBlocks() {
+    // display current date - format: Saturday, March 12th
     currentDayOutput.text(today.format("dddd, MMMM Do"));
 
     // 9 - 17 will create 9 blocks
@@ -18,7 +17,6 @@ function loadTimeBlocks() {
         let hour = i; // 24 hour format
 
         const hours = convertHours(hour);
-        
         const backgroundColor = detectHour(hour); 
 
         const blockRow = $(`<div class="row time-block">`);
@@ -53,11 +51,19 @@ function detectHour(hour) {
 
 // convert hours from 24 hour to 12 hour format
 function convertHours(hour) {
+    
+    // https://medium.com/front-end-weekly/how-to-convert-24-hours-format-to-12-hours-in-javascript-ca19dfd7419d
     let convertedHours = hour % 12;
 
     // 0 -> 12PM
     if (convertedHours === 0) {
         convertedHours += 12;
+    }
+
+    if (convertedHours >= 9 && convertedHours <= 11) {
+        convertedHours = convertedHours + " AM"
+    } else {
+        convertedHours = convertedHours + " PM"
     }
 
     return convertedHours;
@@ -80,9 +86,9 @@ function saveBlockEntry() {
 
 function displayEntries() {
     const entries = JSON.parse(localStorage.getItem("blockEntries"))
-    console.log(entries)
 
     if (entries) {
+        
         entries.forEach(item => {
             const entryId = item.id
             const entry = item.entry
@@ -95,7 +101,7 @@ function displayEntries() {
     }
 }
 
-
+// localStorage.clear();
 
 
 
